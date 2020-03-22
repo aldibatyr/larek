@@ -1,4 +1,26 @@
+@font-face {
+  font-family: bancoDi;
+  src: url(./fonts/bancodi.ttf);
+}
+
+@font-face {
+  font-family: VaguerSans;
+  src: url(./fonts/vaguerSans.ttf);
+}
+
+@font-face {
+  font-family: textFont;
+  src: url(./fonts/textFont.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  visibility: hidden;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
