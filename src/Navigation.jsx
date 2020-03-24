@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import gsap from 'gsap';
 import him from './images/him.jpg';
 import her from './images/her.jpg';
+import { Canvas } from 'react-three-fiber';
+import Image from './Image';
 
 const NavWrap = styled.nav`
   height: 0px;
@@ -71,7 +73,15 @@ const Menu = styled.div`
   width: 100vw;
   height: 0;
   z-index: 1000;
+`;
+
+const ChoicesWrapper = styled.div`
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   #left {
     justify-content: flex-end;
   }
@@ -135,8 +145,7 @@ const Navigation = () => {
   const assignBackground = (el) => {
     if (background !== '') {
       console.log(background)
-      el.current.style.backgroundImage = `url(${background})`;
-      el.current.style.backgroundColor = '';
+      gsap.fromTo('#menu', 0.4, { css: { backgroundImage: '' } }, { css: { backgroundImage: `url(${background})` } })
     } else {
       el.current.style.backgroundColor = '#0e0e0e';
       el.current.style.backgroundImage = ''
@@ -162,18 +171,23 @@ const Navigation = () => {
           </MenuButton>
         </Nav>
         <Menu ref={menu} id="menu">
-          <ChoicesBox id="left">
-            <a
-              onMouseEnter={() => setBackground(him)}
-              onMouseLeave={() => setBackground('')}
-              href="#" id="him">для него</a>
-          </ChoicesBox>
-          <ChoicesBox id="right">
-            <a
-              onMouseEnter={() => setBackground(her)}
-              onMouseLeave={() => setBackground('')}
-              href="#" id="her">для неё</a>
-          </ChoicesBox>
+          <Canvas camera={{ position: [0, 0, 5] }}>
+            <Image />
+          </Canvas>
+          {/* <ChoicesWrapper>
+            <ChoicesBox id="left">
+              <a
+                onMouseEnter={() => setBackground(him)}
+                // onMouseLeave={() => setBackground('')}
+                href="#" id="him">для него</a>
+            </ChoicesBox>
+            <ChoicesBox id="right">
+              <a
+                onMouseEnter={() => setBackground(her)}
+                // onMouseLeave={() => setBackground('')}
+                href="#" id="her">для неё</a>
+            </ChoicesBox>
+          </ChoicesWrapper> */}
         </Menu>
       </NavWrap>
     </>
