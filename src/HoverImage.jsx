@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
@@ -8,6 +9,7 @@ import nyanCat from './images/nyanCat.gif';
 
 const Container = styled.div`
   display: flex;
+  overflow: hidden;
 `;
 
 const Wrapper = styled.div`
@@ -78,9 +80,9 @@ const HoverImage = () => {
     const image = rightSection.firstChild;
     tl
       .to(imageWrapper, 1, { height: '50vh', ease: 'expo.out', delay: 4 })
-      .to(leftImage, 0.5, { scale: 1.1 }, '-=0.7')
-      .to(rightSection, 1, { height: '50vh', ease: 'expo.out' }, '-=0.8')
-      .to(image, 0.5, { scale: 1.1 }, '-=0.7');
+      // .to(leftImage, 0.5, { scale: 1.1 }, '-=0.7')
+      .to(rightSection, 1, { height: '50vh', ease: 'expo.out' }, '-=0.8');
+      // .to(image, 0.5, { scale: 1.1 }, '-=0.7');
   });
 
 
