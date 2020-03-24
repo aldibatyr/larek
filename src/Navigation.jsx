@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import gsap from 'gsap';
 import him from './images/him.jpg';
 import her from './images/her.jpg';
-import { Canvas } from 'react-three-fiber';
-import Image from './Image';
 
 const NavWrap = styled.nav`
   height: 0px;
@@ -65,19 +63,17 @@ const MenuButton = styled.div`
 const Menu = styled.div`
   grid-area: main;
   background-color: #0e0e0e;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
   overflow: hidden;
   width: 100vw;
   height: 0;
-  z-index: 1000;
+  z-index: 999;
 `;
 
 const ChoicesWrapper = styled.div`
   display: flex;
   position: absolute;
+  z-index: 1001;
   top: 0;
   left: 0;
   height: 100%;
@@ -105,6 +101,15 @@ const ChoicesBox = styled.div`
   }
 `;
 
+const BackgroundImages = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -140,12 +145,13 @@ const Navigation = () => {
     animateButton();
   };
 
-  const menu = useRef();
+  const back = useRef();
 
   const assignBackground = (el) => {
     if (background !== '') {
       console.log(background)
-      gsap.fromTo('#menu', 0.4, { css: { backgroundImage: '' } }, { css: { backgroundImage: `url(${background})` } })
+      gsap.fromTo(el.current, 0, { css: { backgroundImage: '' } }, { css: { backgroundImage: `url(${background})` } })
+      gsap.to(el.current, 0.5, { opacity: 1, ease: "expo.out" })
     } else {
       el.current.style.backgroundColor = '#0e0e0e';
       el.current.style.backgroundImage = ''
@@ -153,7 +159,7 @@ const Navigation = () => {
   }
 
   useEffect(() => {
-    assignBackground(menu);
+    assignBackground(back);
   }, [background])
 
   return (
@@ -170,24 +176,23 @@ const Navigation = () => {
             <span className="line bottom" />
           </MenuButton>
         </Nav>
-        <Menu ref={menu} id="menu">
-          <Canvas camera={{ position: [0, 0, 5] }}>
-            <Image />
-          </Canvas>
-          {/* <ChoicesWrapper>
+        <Menu id="menu">
+          <ChoicesWrapper>
             <ChoicesBox id="left">
               <a
                 onMouseEnter={() => setBackground(him)}
-                // onMouseLeave={() => setBackground('')}
+                onMouseLeave={() => setBackground('')}
                 href="#" id="him">для него</a>
             </ChoicesBox>
             <ChoicesBox id="right">
               <a
                 onMouseEnter={() => setBackground(her)}
-                // onMouseLeave={() => setBackground('')}
+                onMouseLeave={() => setBackground('')}
                 href="#" id="her">для неё</a>
             </ChoicesBox>
-          </ChoicesWrapper> */}
+          </ChoicesWrapper>
+          <BackgroundImages ref={back}>
+          </BackgroundImages>
         </Menu>
       </NavWrap>
     </>
