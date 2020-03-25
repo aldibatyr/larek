@@ -98,6 +98,7 @@ const ChoicesBox = styled.div`
     font-size: 3rem;
     color: white;
     text-decoration: none;
+    padding: 0px 10px;
   }
 `;
 
@@ -146,14 +147,23 @@ const Navigation = () => {
 
   const onHoverOn = (e, option, back) => {
     let tl = gsap.timeline()
-    console.log(e.target)
-    tl
-      .to(back.current, 0, { css: { backgroundImage: `url(${option})` } })
-      .to(back.current, 0.4, { opacity: 1, ease: "power3.inOut" }, '+=0.2')
-      .from(back.current, 0.4, { skewY: 2, transformOrigin: "right top" }, '<')
+    console.log(e.target.id)
+    if (e.target.id === 'him') {
+      tl
+        .to(e.target, 0.2, { color: 'black' })
+        .to(back.current, 0, { css: { backgroundImage: `url(${option})` } })
+        .to(back.current, 0.4, { opacity: 1 })
+    } else {
+      tl
+        .to(e.target, 0.2, { color: 'pink' })
+        .to(back.current, 0, { css: { backgroundImage: `url(${option})` } })
+        .to(back.current, 0.4, { opacity: 1 })
+    }
+
   }
 
   const onHoverOff = (e, back) => {
+    gsap.to(e.target, 0.5, { color: 'white' })
     gsap.to(back.current, 0.4, { css: { opacity: 0 } })
   }
 
