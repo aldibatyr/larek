@@ -113,7 +113,6 @@ const BackgroundImages = styled.div`
 
 const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [background, setBackground] = useState('');
 
   const animateButton = () => {
     const animateOpen = gsap.timeline({ paused: true });
@@ -139,28 +138,24 @@ const Navigation = () => {
     }
   };
 
-
   const handleClick = () => {
     setOpenMenu(!openMenu);
     animateButton();
   };
-
   const back = useRef();
 
-  const assignBackground = (el) => {
-    if (background !== '') {
-      console.log(background)
-      gsap.fromTo(el.current, 0, { css: { backgroundImage: '' } }, { css: { backgroundImage: `url(${background})` } })
-      gsap.to(el.current, 0.5, { opacity: 1, ease: "expo.out" })
-    } else {
-      el.current.style.backgroundColor = '#0e0e0e';
-      el.current.style.backgroundImage = ''
-    }
+  const onHoverOn = (e, option, back) => {
+    let tl = gsap.timeline()
+    console.log(e.target)
+    tl
+      .to(back.current, 0, { css: { backgroundImage: `url(${option})` } })
+      .to(back.current, 0.4, { opacity: 1, ease: "power3.inOut" }, '+=0.2')
+      .from(back.current, 0.4, { skewY: 2, transformOrigin: "right top" }, '<')
   }
 
-  useEffect(() => {
-    assignBackground(back);
-  }, [background])
+  const onHoverOff = (e, back) => {
+    gsap.to(back.current, 0.4, { css: { opacity: 0 } })
+  }
 
   return (
     <>
@@ -180,14 +175,14 @@ const Navigation = () => {
           <ChoicesWrapper>
             <ChoicesBox id="left">
               <a
-                onMouseEnter={() => setBackground(him)}
-                onMouseLeave={() => setBackground('')}
+                onMouseEnter={(e) => onHoverOn(e, him, back)}
+                onMouseLeave={(e) => onHoverOff(e, back)}
                 href="#" id="him">для него</a>
             </ChoicesBox>
             <ChoicesBox id="right">
               <a
-                onMouseEnter={() => setBackground(her)}
-                onMouseLeave={() => setBackground('')}
+                onMouseEnter={(e) => onHoverOn(e, her, back)}
+                onMouseLeave={(e) => onHoverOff(e, back)}
                 href="#" id="her">для неё</a>
             </ChoicesBox>
           </ChoicesWrapper>
